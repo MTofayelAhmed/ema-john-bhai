@@ -14,30 +14,38 @@ const Shop = () => {
       .then((data) => setProducts(data));
   }, []);
 
-useEffect(()=>{
-  const savedCart =[]
-const storedCart =  getShoppingCart()
-for(const id in storedCart){
- const addedProduct= products.find(product => product.id === id)
-if(addedProduct){
-  const quantity = storedCart[id]
-  addedProduct.quantity = quantity;
-  savedCart.push(addedProduct)
-}
-
-}
-setCart(savedCart)
-}, [products])
-
+  useEffect(() => {
+    const savedCart = [];
+    const storedCart = getShoppingCart();
+    for (const id in storedCart) {
+      const addedProduct = products.find((product) => product.id === id);
+      if (addedProduct) {
+        const quantity = storedCart[id];
+        addedProduct.quantity = quantity;
+        savedCart.push(addedProduct);
+      }
+    }
+    setCart(savedCart);
+  }, [products]);
 
   const handleCartItem = (product) => {
-    const newProduct = [...cart, product];
-    setCart(newProduct);
-    addToDb(product.id)
+    let newCart = [];
+    const exist = cart.find((pd) => pd.id === product.id);
+    if (!exist) {
+      product.quantity = 1;
+      newCart = [...cart, product];
+    } 
+    else {
+      exist.quantity = exist.quantity + 1;
+      const remaining = cart.filter((pd) => pd.id !== product.id);
+      newCart = [...remaining, exist];
+    }
+    setCart(newCart);
+
+    // const newProduct = [...cart, product];
+    // setCart(newProduct);
+    addToDb(product.id);
   };
-
-
-
 
   return (
     <div className="shop-container">
