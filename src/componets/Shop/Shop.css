@@ -8,4 +8,14 @@
   grid-gap: 40px;
   margin: 80px;
 }
+.btn-proceed{
+  background: #FF9900;
+  width: 95%;
+  height: 56px;
+
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
