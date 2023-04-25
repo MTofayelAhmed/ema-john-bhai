@@ -1,14 +1,17 @@
 import React, { useContext, useState } from "react";
 import "./Login.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { authContext } from "../Provider/AuthProvider";
 
 const Login = () => {
   const [error, setError]= useState('')
 const {SignIn}= useContext(authContext)
 const navigate = useNavigate()
+const location = useLocation()
 
+const from = location?.state?.from?.pathname || '/'
 
+console.log(location)
 const handleSignIn = event => {
   event.preventDefault();
   const form = event.target;
